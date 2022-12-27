@@ -1,0 +1,23 @@
+/* color palette
+----------------------------- */
+:root {
+  --bg-base: #fff;
+  --color-base: #000;
+  --color-primary: #0048f9;
+  --color-secondary: #ff5064;
+  --color-tertiary: #fdad63;
+  --color-grey: #3c4353;
+  --color-grey-light: #838890;
+  --color-accent: #fef332;
+}
+
+$bg-base: var(--bg-base);
+$color-base: var(--color-base);
+$color-primary: var(--color-primary);
+$color-secondary: var(--color-secondary);
+$color-tertiary: var(--color-tertiary);
+$color-grey: var(--color-grey);
+$color-grey-light: var(--color-grey-light);
+$color-accent: var(--color-accent);
+
+$nav-bar-height: 60px;
