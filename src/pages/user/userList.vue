@@ -33,22 +33,18 @@
       </thead>
       <tbody class="text-center" v-if="users && users.length > 0">
         <tr v-for="(user, index) in users" :key="index">
-          <UserListItem :user="user" @delete="confirmDelete" @detail="userDetail"
-          v-if="(index >= (currentPageNo * defaultCount)) && (index < ((currentPageNo + 1) * defaultCount))"/>
+          <UserListItem :user="user" @delete="confirmDelete" @detail="userDetail" />
         </tr>
       </tbody>
       <td v-else class="text-center fs-5" colspan="11">
         <p class="mt-3">No matching records found</p>
       </td>
     </table>
-    <button class="btn btn-sm btn-success me-3" @click="setPager('prev')"
-      :class='(currentPageNo === 0) ? "disable" : "enable"'>
-      Previous
-    </button>
-    <button class="btn btn-sm btn-success" @click="setPager('next')"
-      :class='(defaultCount >= users.length) ? "disable" : "enable"'>
-      Next
-    </button>
+    <paginate :page-count="pageCount" :click-handler="userListItem" :prev-text="'Prev'" :next-text="'Next'"
+      :container-class="'pagination'" :page-class="'page-item'">
+    </paginate>
+
+
     <VModal id="deleteUser" :visible="isDelete">
       <template v-slot:headerTitle> User Delete </template>
       <template v-slot:bodyContent>
@@ -179,11 +175,11 @@ import VModal from "@/components/molecules/VModal/VModal.vue";
 import type { User } from "@/modules/User";
 import type { UserRepository } from "@/repositories/userRepository";
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
-import { defineComponent, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import moment from "moment";
-
-
+import paginate from "vuejs-paginate-next";
+import { computed } from "@vue/reactivity";
 
 const headers = [
   { text: "ID" },
@@ -209,9 +205,8 @@ const searchName = ref<string>("");
 const searchEmail = ref<string>("");
 const fromDate = ref<string>("");
 const toDate = ref<string>("");
-const deleteSuccess = ref<string>();
-  const currentPageNo = ref<number>(0);
-const defaultCount = ref<number>(3);
+const pageChange = ref<number>(3);
+const currentPage = ref<number>(1);
 const { userList, userDelete } = RepositoryFactory.get(
   "user"
 ) as UserRepository;
@@ -221,27 +216,12 @@ const confirmDelete = (id: string) => {
   isDelete.value = true;
 };
 
-const setPager = (type: string) => {
-  const currentPage = currentPageNo.value;
-  if (type === 'prev' && currentPageNo.value > 0) {
-    currentPageNo.value = currentPage - 1;
-    defaultCount.value = 3; //set current item count to default
-  } else if (type === 'next') {
-    currentPageNo.value = currentPage + 1;
-    defaultCount.value = 3 * (currentPage + 1); //if current item count is greater than or equal can not click next page	
-  }
-};
+const pageCount = computed(() => Math.ceil(userItems.value.length / pageChange.value));
 
 const deleteUser = () => {
-  console.log(deleteUserId.value);
-
   userDelete(deleteUserId.value)
     .then((data) => {
-      userListItem();
-      if (data.status == 200) {
-        deleteSuccess.value = data.data.message;
-      }
-      userListItem();
+      userListItem(currentPage.value);
     })
     .catch((errors) => {
       console.log("error", errors);
@@ -254,11 +234,14 @@ const userDetail = (a: any) => {
   userInfo.value = a;
 };
 
-const userListItem = () => {
+const userListItem = (pageNum: number) => {
   userList()
     .then((data) => {
       users.value = data.data;
       userItems.value = data.data;
+      const start = Math.max((pageNum - 1) * pageChange.value, 0);
+      const end = Math.max(pageNum * pageChange.value, pageChange.value);
+      users.value = userItems.value.slice(start, end);
     })
     .catch((err) => {
       console.log(err);
@@ -266,7 +249,10 @@ const userListItem = () => {
 };
 
 onMounted(() => {
-  userListItem();
+  userListItem(currentPage.value);
+  const pageChange = (oldArg: number, newArg: number) => {
+    userListItem(currentPage.value);
+  }
 });
 
 const Search = () => {

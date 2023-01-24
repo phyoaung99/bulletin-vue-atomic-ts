@@ -78,7 +78,6 @@
  import { onMounted, ref } from "vue";
 import { useRouter } from 'vue-router';
 const router = useRouter();
-// const userId = <string>(route.params.userId);
 
  const { form, userData } = useUserCreate();
  const { userProfile,editUser } = RepositoryFactory.get("user") as UserRepository; 
@@ -90,9 +89,7 @@ const router = useRouter();
  const phoneError = ref<string[]>([]);
  const addressError = ref<string[]>([]);
  const dobError = ref<string[]>([]);
-//  const isValid = ref<boolean>(true);
  const apiErr = ref<string>();
-//  const userInfo = ref({});
  const imageFile = ref();
  const profile_photo_filepath = ref();
  const types = [
