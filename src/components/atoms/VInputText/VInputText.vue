@@ -10,10 +10,8 @@
     >
   </div>
 </template>
-
 <script setup lang="ts">
 import type { InputHTMLAttributes } from 'vue';
-
 interface Props {
   modelValue: InputHTMLAttributes['value'];
   type: InputHTMLAttributes['type'];
@@ -37,7 +35,6 @@ const onInput = (e: Event) => {
   emit('update:modelValue', target.value);
 };
 </script>
-
 <style scoped lang="scss">
 .input-text {
   &__input {

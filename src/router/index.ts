@@ -10,9 +10,27 @@ const router = createRouter({
       component: () => import('@/pages/Login.vue'),
     },
     {
+      path: '/postcreate',
+      name: 'postCreate',
+      component: () => import('@/pages/posts/PostCreate.vue'),
+      meta: {
+        authRequired: true,
+      }
+    },
+    {
       path: '/',
-      name: 'home',
-      component: () => import('@/pages/Welcome.vue'),
+      name: 'postList',
+      component: () => import('@/pages/posts/PostList.vue'),
+    },
+    {
+      path: '/postupload',
+      name: 'postUpload',
+      component: () => import('@/pages/posts/PostUpload.vue'),
+    },
+    {
+      path: '/postedit/:post_id',
+      name: 'postEdit',
+      component: () => import('@/pages/posts/PostEdit.vue'),
       meta: {
         authRequired: true,
       }
@@ -31,7 +49,7 @@ router.beforeEach(async (to, from, next) => {
   }
   
   if (to.name == 'login' && store.getters.isLoggedIn) {
-    return next({ name: 'home' });
+    return next({ name: 'postList' });
   }
 
   return next();

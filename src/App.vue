@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import NavBar from '@/components/organisms/NavBar.vue';
+
 </script>
 
 <style scoped lang="scss">

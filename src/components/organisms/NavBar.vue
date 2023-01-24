@@ -1,18 +1,28 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <router-link :to="{ name: 'home' }" class="navbar-brand"
+      <router-link :to="{ name: 'postList' }" class="navbar-brand"
         >Bulletin Board</router-link
       >
       <div class="collapse navbar-collapse">
         <div class="navbar-nav">
           <router-link
             :active-class="'active'"
-            :to="{ name: 'home' }"
+            :to="{ name: 'userList' }"
             class="nav-item nav-link"
             v-if="store.getters.isLoggedIn"
           >
-            Home
+            User
+          </router-link>
+        </div>
+        <div class="navbar-nav">
+          <router-link
+            :active-class="'active'"
+            :to="{ name: 'postList' }"
+            class="nav-item nav-link"
+            v-if="store.getters.isLoggedIn"
+          >
+            Post
           </router-link>
         </div>
 

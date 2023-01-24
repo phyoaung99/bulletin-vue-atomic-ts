@@ -2,12 +2,14 @@ import type { Login } from '@/modules/Login';
 import Repository from "./client/ApiAxiosClient";
 
 export interface LoginResponse {
+  data:{
   access_token: string;
   expires_at: string;
   token_type: string;
   user_id: number
   user_name: string
   user_type: string
+  }
 }
 
 export const useLoginRepository = () => {
@@ -20,6 +22,7 @@ export const useLoginRepository = () => {
   };
 
   const logout = async () => {
+    console.log('logout')
     return await Repository.post('/auth/logout');
   };
 

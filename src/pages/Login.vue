@@ -42,7 +42,7 @@ import VError from "@/components/atoms/VError/VError.vue";
 import FormTemplate from "@/components/templates/FormTemplate.vue"
 import { useLogin } from "@/composables/useLogin";
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
-import type { LoginRepository } from "@/repositories/loginRepository";
+import type { LoginRepository, LoginResponse } from "@/repositories/loginRepository";
 import type { AxiosError } from "axios";
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -62,8 +62,8 @@ const onSubmit = () => {
   if (isValid.value) {
     login(loginData.value)
       .then(({ data }) => {
-        store.commit('setUserData', data);
-        router.push({ name: 'home' });
+        store.commit('setUserData', data.data);
+        router.push({ name: 'postList' });
       })
       .catch((error: AxiosError) => {
         const errRes = error.response as any;
