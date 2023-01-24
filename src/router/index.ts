@@ -36,6 +36,32 @@ const router = createRouter({
       }
     },
     {
+      path: '/user/create',
+      name: 'userCreate',
+      component: () => import('@/pages/user/userCreate.vue'),
+      
+    },
+    {
+      path: '/user/list',
+      name: 'userList',
+      component: () => import('@/pages/user/userList.vue'),
+    },
+    {
+      path: '/user/profile',
+      name: 'userProfile',
+      component: () => import('@/pages/user/userProfile.vue'),
+    },    
+    {
+      path: '/user/profile/edit',
+      name: 'userEdit',
+      component: () => import('@/pages/user/userEdit.vue'),
+    },  
+    {
+      path: '/user/changePassword',
+      name: 'changePassword',
+      component: () => import('@/pages/user/changePassword.vue'),
+    },  
+    {
       path: "/:pathMatch(.*)*",
       redirect: "/login",
     },

@@ -20,7 +20,6 @@
             :active-class="'active'"
             :to="{ name: 'postList' }"
             class="nav-item nav-link"
-            v-if="store.getters.isLoggedIn"
           >
             Post
           </router-link>
@@ -35,7 +34,39 @@
               v-if="!store.getters.isLoggedIn"
               >Login</router-link
             >
-            <a
+            <ul class="navbar-nav">
+              <li class="nav-item  dropdown"  v-if="store.getters.isLoggedIn">
+                <a class="nav-link nav-item dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ store.getters.userName }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li>
+                    <router-link
+                      class="nav-item nav-link"
+                      :to="{ name: 'userProfile' }"
+                      :active-class="'active'"
+                      >Profile</router-link
+                    >
+                  </li>
+                  <li>
+                    <router-link
+                      class="nav-item nav-link"
+                      :to="{ name: 'changePassword' }"
+                      :active-class="'active'"
+                      >Change Password</router-link
+                    >
+                  </li>
+                  <li><a
+                    class="nav-item nav-link"
+                    @click.prevent="logoutAction"
+                    href="javascript:void(0)"
+                    v-if="store.getters.isLoggedIn"
+                    >Logout</a
+                  ></li>
+                </ul>
+              </li>
+            </ul>
+            <!-- <a
               class="nav-item nav-link"
               href="javascript:void(0)"
               v-if="store.getters.isLoggedIn"
@@ -47,7 +78,7 @@
               href="javascript:void(0)"
               v-if="store.getters.isLoggedIn"
               >Logout</a
-            >
+            > -->
           </ul>
         </div>
       </div>
@@ -76,5 +107,11 @@ const logoutAction = () => {
 <style scoped lang="scss">
 .navbar {
   height: $nav-bar-height;
+}
+.dropdown-menu {
+  --bs-dropdown-min-width: 9rem;
+}
+.dropdown-menu[data-bs-popper] {
+    left: -56px !important;
 }
 </style>
