@@ -44,6 +44,15 @@
                     </tr>
                 </tbody>
             </table>
+          <paginate
+            :page-count="pageCount"
+            :click-handler="postListItem"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :container-class="'pagination'"
+            :page-class="'page-item'"
+            >
+        </paginate>
       </div>
     </div>
     </div>
@@ -75,6 +84,7 @@
 </template>
 
 <script setup lang="ts">
+import paginate from "vuejs-paginate-next";
 import VModal from "@/components/molecules/VModal/VModal.vue"
 import VInputText from "@/components/atoms/VInputText/VInputText.vue"
 import ListItem from "@/components/organisms/ListItem.vue";
@@ -84,11 +94,10 @@ import VFormControl from "@/components/molecules/VFormControl/VFormControl.vue";
 import type { Post } from "@/modules/Login";
 import type { postRepository, PostResponse } from "@/repositories/postRepository";
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
-import { defineComponent, onMounted, ref } from "@vue/runtime-core";
+import { computed, defineComponent, onMounted, ref } from "@vue/runtime-core";
 import router from "@/router";
 import { useStore } from "vuex";
 const headers = [
-    {text:'ID'},
     {text:'Title'},
     {text:'Description'},
     {text:'Posted User'},
@@ -103,8 +112,8 @@ const keyword = ref<string>('');
 const deleteId = ref<number>(0);
 const isShowDetail = ref<boolean>(false);
 const isDelete = ref<boolean>(false);
-const currentPageNo = ref<number>(0);
-const defaultCount = ref<number>(8);
+const pageChange = ref<number>(8);
+const currentPage = ref<number>(1);
 const { postList, postDelete, getPost } = RepositoryFactory.get('post') as postRepository;
 
 if(!store.getters.isLoggedIn){
@@ -119,19 +128,26 @@ const deletePost = ()=> {
     if(data.status == 200){
         deleteSuccess.value = data.data.message;
     }
-    postListItem();
+    postListItem(currentPage.value);
   }).catch((errors)=>{
-    console.log('error',errors)
+    console.log('error',errors);
   })
 };
-const postListItem = ()=>{
+
+const postListItem = (pageNum:number)=>{
     postList().then((data)=>{
-        posts.value = data.data;
-        postItems.value = data.data;
-    }).catch((err)=>{
+    posts.value = data.data;
+    postItems.value = data.data;
+    const start = Math.max((pageNum - 1) * pageChange.value, 0);
+    const end = Math.max(pageNum * pageChange.value, pageChange.value);
+    posts.value = postItems.value.slice(start, end);
+    })
+    .catch((err)=>{
         console.log(err);
     });
 };
+
+const pageCount = computed(()=> Math.ceil(postItems.value.length / pageChange.value));
 
 const editPost = (id:number) => {
     router.push({name:"postEdit", params: { post_id: id } })
@@ -141,34 +157,29 @@ const postDetail = (id:number) => {
         isShowDetail.value = true;
         post.value = data.data
     }).catch((err) => {
-        console.log("err")
+        console.log("err");
     })
 }
+
 onMounted(()=>{
-    postListItem();
+    postListItem(currentPage.value);
+    const pageChange = (oldArg:number, newArg:number) =>{
+      postListItem(currentPage.value);
+    }
 });
+
 const filterPosts = () =>{
     if(keyword.value){
-        posts.value = postItems.value.filter(postItem => {    
+        posts.value = postItems.value.filter(postItem => {
         return (
             postItem.title.includes(keyword.value) ||
             postItem.description.includes(keyword.value)
         );
         });
     }else{
-        postListItem();
+        postListItem(currentPage.value);
     }
 };
-const setPager = (type:string) =>{		
-        const currentPage = currentPageNo.value;
-        if (type === 'prev' && currentPageNo.value > 0) {
-            currentPageNo.value = currentPage - 1;
-            defaultCount.value = 8; //set current item count to default
-        } else if (type === 'next') {				
-            currentPageNo.value = currentPage + 1;						
-            defaultCount.value = 8 * (currentPage + 1); //if current item count is greater than or equal can not click next page	
-        }
-    }
 
 </script>
 

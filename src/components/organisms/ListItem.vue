@@ -1,5 +1,4 @@
 <template>
-      <td>{{ index+1 }}</td>
       <td>
         <a @click="postDetail(post.id)" class="text-danger" 
         data-bs-toggle="modal" :data-bs-target="store.getters.isLoggedIn?`#showDetail`:''" 
