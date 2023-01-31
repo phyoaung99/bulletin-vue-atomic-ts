@@ -1,15 +1,14 @@
 import { useLoginRepository } from './loginRepository';
 import type { LoginRepository } from './loginRepository';
 import { usePostRepository, type postRepository } from './postRepository';
-import { useUserRepository } from './userRepository';
-import type { UserRepository } from './userRepository';
+import { useUserRepository, type UserRepository } from './userRepository';
 import { usePasswordRepository } from './PasswordRepository';
 import type { PasswordRepository } from './PasswordRepository';
 // 全てのリポジトリを紐付ける
 export type Repositories = {
   login: LoginRepository;
   post : postRepository;
-  user: UserRepository
+  user: UserRepository;
   password: PasswordRepository;
 };
 
@@ -25,3 +24,4 @@ const repositories = {
 export const RepositoryFactory = {
   get: (name: keyof Repositories): Repositories[keyof Repositories] => repositories[name],
 };
+

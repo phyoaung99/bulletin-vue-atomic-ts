@@ -10,7 +10,7 @@
             :active-class="'active'"
             :to="{ name: 'userList' }"
             class="nav-item nav-link"
-            v-if="store.getters.isLoggedIn"
+            v-if="store.getters.isLoggedIn && store.state.user.user_type == 0"
           >
             User
           </router-link>
@@ -66,19 +66,6 @@
                 </ul>
               </li>
             </ul>
-            <!-- <a
-              class="nav-item nav-link"
-              href="javascript:void(0)"
-              v-if="store.getters.isLoggedIn"
-              >{{ store.getters.userName }}</a
-            >
-            <a
-              class="nav-item nav-link"
-              @click.prevent="logoutAction"
-              href="javascript:void(0)"
-              v-if="store.getters.isLoggedIn"
-              >Logout</a
-            > -->
           </ul>
         </div>
       </div>

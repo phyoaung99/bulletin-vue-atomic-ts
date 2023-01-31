@@ -41,7 +41,7 @@ import VBtn from "@/components/atoms/VBtn/VBtn.vue";
 import VError from "@/components/atoms/VError/VError.vue";
 import VTextArea from "@/components/atoms/VTextArea/VTextArea.vue";
 import FormTemplate from "@/components/templates/FormTemplate.vue"
-import { usePost } from "@/composables/PostCreate";
+import { usePost } from "@/composables/usePost";
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
 import type { postRepository } from "@/repositories/postRepository";
 import { useRoute, useRouter } from "vue-router";

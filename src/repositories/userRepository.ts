@@ -50,9 +50,6 @@ export interface CreateResponse {
       return await Repository.get<CreateResponse>('/user/profile');
     };
 
-
-
-  
     return {
       createUser,
       userList,

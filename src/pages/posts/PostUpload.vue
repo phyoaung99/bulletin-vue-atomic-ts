@@ -37,7 +37,6 @@ const getFile = (e: any) => {
        console.log(csvFile.value);
 }
 const onSubmitFile = () => {
-      console.log("helo")
       const formData = new FormData();
       formData.append("csv_file", csvFile.value as any);
       postUpload(formData)

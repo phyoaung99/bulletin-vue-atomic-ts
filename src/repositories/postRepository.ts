@@ -1,4 +1,4 @@
-import type { Post } from '@/modules/Login';
+import type { Post } from '@/modules/Post';
 import axios from 'axios';
 import Repository from "./client/ApiAxiosClient";
 

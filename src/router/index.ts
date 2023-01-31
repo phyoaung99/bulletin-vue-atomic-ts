@@ -39,27 +39,42 @@ const router = createRouter({
       path: '/user/create',
       name: 'userCreate',
       component: () => import('@/pages/user/userCreate.vue'),
+      meta: {
+        authRequired: true,
+      }
       
     },
     {
       path: '/user/list',
       name: 'userList',
       component: () => import('@/pages/user/userList.vue'),
+      meta: {
+        authRequired: true,
+      }
     },
     {
       path: '/user/profile',
       name: 'userProfile',
       component: () => import('@/pages/user/userProfile.vue'),
+      meta: {
+        authRequired: true,
+      }
     },    
     {
       path: '/user/profile/edit',
       name: 'userEdit',
       component: () => import('@/pages/user/userEdit.vue'),
+      meta: {
+        authRequired: true,
+      }
     },  
     {
       path: '/user/changePassword',
       name: 'changePassword',
       component: () => import('@/pages/user/changePassword.vue'),
+      meta: {
+        authRequired: true,
+      }
     },  
     {
       path: "/:pathMatch(.*)*",

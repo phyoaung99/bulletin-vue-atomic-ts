@@ -78,7 +78,7 @@
         <p> Are You Sure Want To Delete ? </p>
     </template>
     <template #actionButton>
-        <VBtn @click="deletePost" data-bs-dismiss="modal" class="btn-danger">Delete</VBtn>
+        <VBtn @click="deletePost" data-bs-dismiss="modal" :color="'danger'">Delete</VBtn>
     </template>
     </VModal>
 </template>

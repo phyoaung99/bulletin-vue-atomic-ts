@@ -55,7 +55,7 @@
       </template>
     </VModal>
 
-    <VModal id="showDetail" :visible="isShow">
+    <VModal id="showDetail" :visible="isShow" class="user-modal">
       <template v-slot:headerTitle> User Detail</template>
       <template v-slot:bodyContent>
         <div class="container">
@@ -281,5 +281,8 @@ const Search = () => {
 <style scoped lang="scss">
 td {
   text-align: center;
+}
+.user-modal{
+ --bs-modal-width: 800px !important;
 }
 </style>

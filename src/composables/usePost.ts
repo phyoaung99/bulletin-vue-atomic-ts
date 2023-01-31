@@ -1,6 +1,5 @@
 import { reactive, computed } from 'vue';
-import type { Post } from '@/modules/Login'
-
+import type { Post } from '@/modules/Post'
 interface Form {
   title?: string;
   description?: string;

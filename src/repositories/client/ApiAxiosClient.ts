@@ -2,8 +2,7 @@ import axios, { type AxiosRequestConfig } from 'axios';
 import type { AxiosInstance } from 'axios';
 import store from "@/store";
 
-const baseDomain = "http://127.0.0.1:8000/api";
-import.meta.env.VITE_API_BASE_DOMAIN
+const baseDomain = import.meta.env.VITE_API_BASE_DOMAIN;
 
 const baseURL = `${baseDomain}`;
 

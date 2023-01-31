@@ -42,6 +42,13 @@
             </VFormControl>
             <VFormControl>
                 <VBtn submit>Create</VBtn>
+                <VBtn
+                    :to="{ name: 'userList' }"
+                    :color="'secondary'"
+                    :class="'ms-3'"
+                    >
+                    Cancel
+                </VBtn>
             </VFormControl>
         </form>
      </template>
